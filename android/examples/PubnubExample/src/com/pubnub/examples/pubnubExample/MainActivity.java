@@ -18,6 +18,9 @@ import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -32,6 +35,7 @@ public class MainActivity extends Activity {
      * = "noise"; String channel = "a";
      */
 
+	private Activity main;
     Pubnub pubnub = new Pubnub("demo", "demo", "", false);
 
     private void notifyUser(Object message) {
@@ -77,7 +81,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
+        main = this;
         setContentView(R.layout.usage);
         this.registerReceiver(new BroadcastReceiver() {
             @Override
@@ -87,6 +91,16 @@ public class MainActivity extends Activity {
             }
 
         }, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+        
+        final Button btnMenu = (Button) findViewById(R.id.btnMenu);
+        
+        btnMenu.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+                main.openOptionsMenu();
+            }
+});
 
     }
 
