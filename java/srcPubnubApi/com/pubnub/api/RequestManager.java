@@ -54,16 +54,18 @@ abstract class Worker implements Runnable {
     public abstract void shutdown();
 
     void die() {
-        httpReq.setResponseHandler(new ResponseHandler() {
-
-			public void handleResponse(HttpRequest hreq, String response) {
-				
-			}
-
-			public void handleError(HttpRequest hreq, PubnubError error) {
-			}
-        	
-        });
+    	if (httpReq != null) {
+	        httpReq.setResponseHandler(new ResponseHandler() {
+	
+				public void handleResponse(HttpRequest hreq, String response) {
+					
+				}
+	
+				public void handleError(HttpRequest hreq, PubnubError error) {
+				}
+	        	
+	        });
+    	}
         _die = true;
         shutdown();
     }
