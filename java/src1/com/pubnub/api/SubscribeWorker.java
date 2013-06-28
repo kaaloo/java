@@ -1,9 +1,11 @@
 package com.pubnub.api;
 
-import java.net.SocketTimeoutException;
+import static com.pubnub.api.PubnubError.PNERROBJ_5019_HTTP_ERROR;
+import static com.pubnub.api.PubnubError.PNERR_5031_FORBIDDEN;
+import static com.pubnub.api.PubnubError.PNERR_5032_UNAUTHORIZED;
+
 import java.util.Hashtable;
 import java.util.Vector;
-import static com.pubnub.api.PubnubError.*;
 
 class SubscribeWorker extends AbstractSubscribeWorker {
 
@@ -35,7 +37,7 @@ class SubscribeWorker extends AbstractSubscribeWorker {
                     currentRetryAttempt = 1;
                     break;
                 }
-            } catch (SocketTimeoutException e) {
+            } /* catch (SocketTimeoutException e) {
                 log.verbose("No Traffic , Read Timeout Exception in Fetch : " + e.toString());
                 if (_die) {
                     log.verbose("Asked to Die, Don't do back from DAR processing");
@@ -47,7 +49,7 @@ class SubscribeWorker extends AbstractSubscribeWorker {
                 }
                 break;
 
-            } catch (PubnubException e) {
+            }*/ catch (PubnubException e) {
 
                 switch(e.getPubnubError().errorCode) {
                 case PNERR_5031_FORBIDDEN:
