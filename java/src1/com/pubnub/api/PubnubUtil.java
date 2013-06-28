@@ -1,6 +1,10 @@
 package com.pubnub.api;
 
-import com.codename1.io.Util;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 /**
  * PubnubUtil class provides utility methods like urlEncode etc
@@ -17,6 +21,10 @@ public class PubnubUtil extends PubnubUtilCore {
      * @return , encoded string
      */
     public static String urlEncode(String sUrl) {
-    	return Util.encodeUrl(sUrl);
+        try {
+            return URLEncoder.encode(sUrl, "UTF-8").replace("+", "%20");
+        } catch (UnsupportedEncodingException e) {
+            return null;
+        }
     }
 }

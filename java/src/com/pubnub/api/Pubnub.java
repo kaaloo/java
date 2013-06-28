@@ -1,7 +1,8 @@
 package com.pubnub.api;
 
 import java.io.UnsupportedEncodingException;
-import org.bouncycastle.util.SecureRandom;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -105,47 +106,7 @@ public class Pubnub extends PubnubCore {
     }
 
     protected String uuid() {
-
-        String valueBeforeMD5;
-        String valueAfterMD5;
-        SecureRandom mySecureRand = new SecureRandom();
-        String s_id = String.valueOf(PubnubCore.class.hashCode());
-        StringBuffer sbValueBeforeMD5 = new StringBuffer();
-        try {
-            long time = System.currentTimeMillis();
-            long rand = 0;
-            rand = mySecureRand.nextLong();
-            sbValueBeforeMD5.append(s_id);
-            sbValueBeforeMD5.append(":");
-            sbValueBeforeMD5.append(Long.toString(time));
-            sbValueBeforeMD5.append(":");
-            sbValueBeforeMD5.append(Long.toString(rand));
-            valueBeforeMD5 = sbValueBeforeMD5.toString();
-            byte[] array = PubnubCrypto.md5(valueBeforeMD5);
-            StringBuffer sb = new StringBuffer();
-            for (int j = 0; j < array.length; ++j) {
-                int b = array[j] & 0xFF;
-                if (b < 0x10) {
-                    sb.append('0');
-                }
-                sb.append(Integer.toHexString(b));
-            }
-            valueAfterMD5 = sb.toString();
-            String raw = valueAfterMD5.toUpperCase();
-            sb = new StringBuffer();
-            sb.append(raw.substring(0, 8));
-            sb.append("-");
-            sb.append(raw.substring(8, 12));
-            sb.append("-");
-            sb.append(raw.substring(12, 16));
-            sb.append("-");
-            sb.append(raw.substring(16, 20));
-            sb.append("-");
-            sb.append(raw.substring(20));
-            return sb.toString();
-        } catch (Exception e) {
-            return null;
-        }
+        return java.util.UUID.randomUUID().toString();
     }
 
     /**
